@@ -13,8 +13,8 @@
 
 int lobby_checkroom_avail(net_lobby *lobby, int room) {
     if (lobby[room].status == LB_AVAIL) {
-        if (*lobby[room].pair.cli_a == 0) return 1;
-        else if (*lobby[room].pair.cli_b == 0) return 2;
+        if (lobby[room].pair.cli_a == NULL) return 1;
+        else if (lobby[room].pair.cli_b == NULL) return 2;
     }
 
     return -1;
@@ -22,7 +22,7 @@ int lobby_checkroom_avail(net_lobby *lobby, int room) {
 
 int lobby_checkroom_isfull(net_lobby *lobby, int room) {
     if (lobby[room].status == LB_AVAIL)
-        if (*lobby[room].pair.cli_a != 0 && *lobby[room].pair.cli_b != 0) return 1;
+        if (lobby[room].pair.cli_a != NULL && lobby[room].pair.cli_b != NULL) return 1;
 
     return -1;
 }
@@ -64,26 +64,27 @@ int lobby_assign_cli(net_lobby *lobby, cli_t *client) {
 
 int lobby_random_start(net_lobby *lobby, int room, char *fen) {
     int result = -1;
-
+	
+	cli_t foo[2];
+	if (generate_val(100) > 50)
+		foo = { *lobby[room].pair.cli_a, *lobby[room].pair.cli_b };
+	else
+		foo = { *lobby[room].pair.cli_b, *lobby[room].pair.cli_a };
+	
     char buf[256];
     sprintf(buf, "%d w %s", SV_LOBBY_POST_START, fen);
-
-    if (generate_val(100) < 50) {
-        result = send(*lobby[room].pair.cli_a, buf, strlen(buf) + 1, 0);
-        if (result == -1) { perror("lobby_random_start 1"); return -1; }
-        buf[0] = 'b';
-        result = send(*lobby[room].pair.cli_b, buf, strlen(buf) + 1, 0);
-        if (result == -1) { perror("lobby_random_start 2"); return -1; }
-    } else {
-        send(*lobby[room].pair.cli_b, buf, strlen(buf) + 1, 0);
-        if (result == -1) { perror("lobby_random_start 1"); return -1; }
-        buf[0] = 'b';
-        send(*lobby[room].pair.cli_a, buf, strlen(buf) + 1, 0);
-        if (result == -1) { perror("lobby_random_start 2"); return -1; }
-    }
-
+	
+	for (int n = 0; n < 2; n++) {
+		result = send(foo[n], buf, strlen(buf) + 1, 0);
+		
+		if (result == -1) {
+			perror("lobby_random_start 2");
+			return -1;
+		}
+	}
+	
     lobby[room].status = LB_BUSY;
-
+	
     return result;
 }
 
