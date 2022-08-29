@@ -3,7 +3,6 @@
 #include <sys/time.h>
 
 #include "../pp4m/pp4m_net.h"
-#include "../chess/core.h"
 #include "net.h"
 
 int NET_ConnectSocketToServer(cli_t *socket, char *server, int port) {
