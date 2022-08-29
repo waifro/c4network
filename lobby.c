@@ -80,8 +80,10 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen) {
 	for (int n = 0; n < 2; n++) {
 		result = send(foo[n], buf, strlen(buf) + 1, 0);
 		
+		buf[4] = 'b';
+		
 		if (result == -1) {
-			perror("lobby_random_start 2");
+			perror("lobby_random_start");
 			return -1;
 		}
 	}
