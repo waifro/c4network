@@ -66,10 +66,13 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen) {
     int result = -1;
 	
 	cli_t foo[2];
-	if (generate_val(100) > 50)
-		foo = { *lobby[room].pair.cli_a, *lobby[room].pair.cli_b };
-	else
-		foo = { *lobby[room].pair.cli_b, *lobby[room].pair.cli_a };
+	if (generate_val(100) > 50){ 
+		foo[0] = *lobby[room].pair.cli_a;
+		foo[1] = *lobby[room].pair.cli_b;
+	} else {
+		foo[0] = *lobby[room].pair.cli_b;
+		foo[1] = *lobby[room].pair.cli_a;
+	}
 	
     char buf[256];
     sprintf(buf, "%d w %s", SV_LOBBY_POST_START, fen);
