@@ -95,6 +95,10 @@ int sv_redirect_svcode_LOBBY_POST(int code, net_lobby *lobby, cli_t *client, int
     int result = -1;
 
     switch(code) {
+		
+		case SV_LOBBY_POST_TIME:
+			printf("hello\n");
+			break;
         default:
             break;
     }
