@@ -182,7 +182,7 @@ int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room) {
 	
 	char buf[256];
 	
-	if (lobby[room].utimer == lobby[room].pair.cli_a)
+	if (lobby[room].utimer == *lobby[room].pair.cli_a)
 		sprintf(buf, "%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_a);
 	else sprintf(buf, "%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_b);
 	
