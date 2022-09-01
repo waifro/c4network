@@ -37,7 +37,7 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen);
 int lobby_updateroom_cli_left(net_lobby *lobby, cli_t *client);
 
 /* resets a room by default */
-int lobby_updateroom_reset(net_lobby *lobby);
+int lobby_updateroom_reset(net_lobby *lobby, int room);
 
 /* on success, updates old code by overwriting it | pr: lobby_redirect_buf() */
 int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *buffer);

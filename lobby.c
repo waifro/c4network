@@ -49,7 +49,7 @@ int lobby_checkroom_isblocked(net_lobby *lobby, int room) {
 
 int lobby_checkroom_endcycle(net_lobby *lobby, int room) {
 	if (lobby[room].status == LB_BUSY || lobby[room].status == LB_ERROR) {
-		if (lobby[room].room.cli_a == NULL && lobby[room].room.cli_b == NULL) return 1;
+		if (lobby[room].pair.cli_a == NULL && lobby[room].pair.cli_b == NULL) return 1;
 	}
 	
 	return -1;
@@ -135,13 +135,13 @@ int lobby_updateroom_cli_left(net_lobby *lobby, cli_t *client) {
 
 int lobby_updateroom_reset(net_lobby *lobby, int room) {
 	
-	lobby_list[room].pair.cli_a = NULL;
-    lobby_list[room].pair.cli_b = NULL;
-	lobby_list[room].clock_a = 0;
-	lobby_list[room].clock_b = 0;
-	lobby_list[room].utimer = 0;
-	lobby_list[room].timestamp = 0;
-    lobby_list[room].status = LB_AVAIL;
+	lobby[room].pair.cli_a = NULL;
+    lobby[room].pair.cli_b = NULL;
+	lobby[room].clock_a = 0;
+	lobby[room].clock_b = 0;
+	lobby[room].utimer = 0;
+	lobby[room].timestamp = 0;
+    lobby[room].status = LB_AVAIL;
 	
 	return 0;
 }
