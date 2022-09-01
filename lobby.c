@@ -37,6 +37,24 @@ int lobby_checkroom_isbusy(net_lobby *lobby, int room) {
     else return -1;
 }
 
+int lobby_checkroom_iserror(net_lobby *lobby, int room) {
+    if (lobby[room].status == LB_ERROR) return 1;
+    else return -1;
+}
+
+int lobby_checkroom_isblocked(net_lobby *lobby, int room) {
+    if (lobby[room].status == LB_BLOCKED) return 1;
+    else return -1;
+}
+
+int lobby_checkroom_endcycle(net_lobby *lobby, int room) {
+	if (lobby[room].status == LB_BUSY || lobby[room].status == LB_ERROR) {
+		if (lobby[room].room.cli_a == NULL && lobby[room].room.cli_b == NULL) return 1;
+	}
+	
+	return -1;
+}
+
 int lobby_checkroom_cli(net_lobby *lobby, cli_t *client, int room) {
     if (lobby[room].pair.cli_a == client) return 1;
     else if (lobby[room].pair.cli_b == client) return 2;
@@ -88,6 +106,9 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen) {
 		}
 	}
 	
+	lobby[room].utimer = foo[0];
+	lobby[room].timestamp = clock();
+	
     lobby[room].status = LB_BUSY;
 	
     return result;
@@ -106,14 +127,23 @@ int lobby_updateroom_cli_left(net_lobby *lobby, cli_t *client) {
 
         lobby[room].status = LB_ERROR;
 
-        // room cleaned
-        if (lobby[room].pair.cli_a == NULL && lobby[room].pair.cli_b == NULL)
-            lobby[room].status = LB_AVAIL;
-
         break;
     }
 
     return room;
+}
+
+int lobby_updateroom_reset(net_lobby *lobby, int room) {
+	
+	lobby_list[room].pair.cli_a = NULL;
+    lobby_list[room].pair.cli_b = NULL;
+	lobby_list[room].clock_a = 0;
+	lobby_list[room].clock_b = 0;
+	lobby_list[room].utimer = 0;
+	lobby_list[room].timestamp = 0;
+    lobby_list[room].status = LB_AVAIL;
+	
+	return 0;
 }
 
 int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *buffer) {

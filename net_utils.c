@@ -35,11 +35,10 @@ void init_client_list(cli_t *client_list, int max) {
 }
 
 void init_lobby_list(net_lobby *lobby_list, int max) {
-    for (int i = 0; i < max; i++) {
-        lobby_list[i].pair.cli_a = NULL;
-        lobby_list[i].pair.cli_b = NULL;
-        lobby_list[i].status = LB_AVAIL;
-    }
+	for (int i = 0; i < max; i++)
+		lobby_updateroom_reset(lobby_list, i); // used just for reference
+	
+	return;
 }
 
 int client_accept(int master_socket, struct sockaddr_in *addr) {

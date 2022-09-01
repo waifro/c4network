@@ -2,6 +2,8 @@
 #define NET_UTILS_H
 
 #define cli_t int
+
+#include <time.h>
 #include "../pp4m/pp4m_net.h"
 
 #define MAX_CLIENTS 2
@@ -22,6 +24,11 @@ typedef struct {
 
 typedef struct {
     pair_cli_t pair;
+	
+	clock_t clock_a, clock_b; 	// saves clock passed
+	cli_t utimer;	// determines which player is under timer
+	clock_t timestamp; // initialization of lobby
+	
     LOBBY_STATUS status;
 } net_lobby;
 
