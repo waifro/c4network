@@ -42,8 +42,12 @@ int lobby_updateroom_reset(net_lobby *lobby, int room);
 /* on success, updates old code by overwriting it | pr: lobby_redirect_buf() */
 int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *buffer);
 int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *buffer);
+int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room);
 
-/* on success, redirects packet to the other client inside lobby */
+/* on success, spams a packet to the pair */
+int lobby_spam_buf(net_lobby *lobby, int room, char *buffer);
+
+/* on success, redirects packet to the other client inside lobby, otherwise returns -1 */
 int lobby_redirect_buf(net_lobby *lobby, cli_t *client, int room, char *buffer);
 
 #endif

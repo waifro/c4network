@@ -177,6 +177,37 @@ int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *bu
     return result;
 }
 
+int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room) {
+    int result = -1;
+	
+	char buf[256];
+	
+	if (lobby[room].utimer == lobby[room].pair.cli_a)
+		sprintf("%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_a);
+	else sprintf("%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_b);
+	
+	result = lobby_spam_buf(lobby, room, buffer);
+	if (result == -1) perror("lobby_SV_POST_LOBBY_TIME");
+	
+	return result;
+}
+
+int lobby_spam_buf(net_lobby *lobby, int room, char *buffer) {
+	int result = -1;
+	
+    result = send(*lobby[room].pair.cli_a, buffer, strlen(buffer) + 1, 0);
+	
+	if (result == -1)
+		perror("lobby_spam_buf 1");
+	
+    result = send(*lobby[room].pair.cli_b, buffer, strlen(buffer) + 1, 0);
+	
+	if (result == -1)
+		perror("lobby_spam_buf 2");
+	
+    return result;
+}
+
 int lobby_redirect_buf(net_lobby *lobby, cli_t *client, int room, char *buffer) {
     int result = -1;
 

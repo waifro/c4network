@@ -101,6 +101,7 @@ int cl_redirect_svcode_LOBBY_POST(int code, char **buffer, int *position_old, in
         break;
 
     default:
+		printf("cl_redirect_svcode_LOBBY_POST RAW: %s\n", *buffer);
         break;
     }
 
