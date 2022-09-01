@@ -183,10 +183,10 @@ int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room) {
 	char buf[256];
 	
 	if (lobby[room].utimer == lobby[room].pair.cli_a)
-		sprintf("%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_a);
-	else sprintf("%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_b);
+		sprintf(buf, "%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_a);
+	else sprintf(buf, "%d %ld", SV_LOBBY_POST_TIME, lobby[room].clock_b);
 	
-	result = lobby_spam_buf(lobby, room, buffer);
+	result = lobby_spam_buf(lobby, room, buf);
 	if (result == -1) perror("lobby_SV_POST_LOBBY_TIME");
 	
 	return result;
