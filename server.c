@@ -97,7 +97,7 @@ int sv_redirect_svcode_LOBBY_POST(int code, net_lobby *lobby, cli_t *client, int
     switch(code) {
 		
 		case SV_LOBBY_POST_TIME:
-			
+			result = lobby_SV_POST_LOBBY_TIME(lobby, room);
 			break;
         default:
             break;
