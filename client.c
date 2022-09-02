@@ -112,15 +112,16 @@ int cl_redirect_svcode_LOBBY_POST(int code, char *buffer, int *position_old, int
 
 
 
-int cl_SV_LOBBY_POST_MESG(char **buffer) {
+int cl_SV_LOBBY_POST_MESG(char *buffer) {
     int result = -1;
     char *buf = malloc(sizeof(char) * 255);
     memset(buf, 0x00, 255);
 
-    result = sscanf(*buffer, "%*d %255c", buf);
+    result = sscanf(buffer, "%*d %255c", buf);
 
-    *buffer = buf;
-
+    //*buffer = buf; old 
+	strcpy(buffer, buf);
+	
     return result;
 }
 
