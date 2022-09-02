@@ -87,13 +87,13 @@ int cl_redirect_svcode_LOBBY_REQ(int code, char *buffer, int *position_old, int 
     return result;
 }
 
-int cl_redirect_svcode_LOBBY_POST(int code, char **buffer, int *position_old, int *position_new, int *promotn) {
+int cl_redirect_svcode_LOBBY_POST(int code, char *buffer, int *position_old, int *position_new, int *promotn) {
     int result = -1;
 
     switch(code) {
 
     case SV_LOBBY_POST_MOVE:
-        result = cl_SV_LOBBY_POST_MOVE(*buffer, position_old, position_new, promotn);
+        result = cl_SV_LOBBY_POST_MOVE(buffer, position_old, position_new, promotn);
         break;
 
     case SV_LOBBY_POST_MESG:
@@ -101,8 +101,7 @@ int cl_redirect_svcode_LOBBY_POST(int code, char **buffer, int *position_old, in
         break;
 
     default:
-		printf("cl_redirect_svcode_LOBBY_POST RAW: %s\n", *buffer);
-        break;
+		break;
     }
 
     return result;
@@ -257,14 +256,14 @@ int cl_REQ_ASSIGN_LOBBY(char *buffer) {
 }
 
 // client: server sent a packet
-int cl_svcode_redirect(int code, char **buffer, int *position_old, int *position_new, int *promotn) {
+int cl_svcode_redirect(int code, char *buffer, int *position_old, int *position_new, int *promotn) {
     if (code == -1) return -1;
     int result = 0;
 
     if (sv_status_STATE(code) == 0) result = 0; // im not sure what to do with this and cli_t.status
-    else if (sv_status_REQ(code) == 0) result = cl_redirect_svcode_REQ(code, *buffer);
-    else if (sv_status_POST(code) == 0) result = cl_redirect_svcode_POST(code, *buffer);
-    else if (sv_status_LOBBY_REQ(code) == 0) result = cl_redirect_svcode_LOBBY_REQ(code, *buffer, position_old, position_new, promotn);
+    else if (sv_status_REQ(code) == 0) result = cl_redirect_svcode_REQ(code, buffer);
+    else if (sv_status_POST(code) == 0) result = cl_redirect_svcode_POST(code, buffer);
+    else if (sv_status_LOBBY_REQ(code) == 0) result = cl_redirect_svcode_LOBBY_REQ(code, buffer, position_old, position_new, promotn);
     else if (sv_status_LOBBY_POST(code) == 0) result = cl_redirect_svcode_LOBBY_POST(code, buffer, position_old, position_new, promotn);
 
     return result;
