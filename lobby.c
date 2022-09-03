@@ -160,10 +160,10 @@ int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *bu
 	if (lobby[room].utimer == *lobby[room].pair.cli_a) {
 		
 		lobby[room].utimer = *lobby[room].pair.cli_b;
-		lobby[room].clock_a = (clock() - lobby[room].timestamp) - lobby[room].clock_a;
+		lobby[room].clock_a += (clock() - lobby[room].timestamp) - lobby[room].clock_b - lobby[room].clock_a;
 	} else {
 		lobby[room].utimer = *lobby[room].pair.cli_a;
-		lobby[room].clock_b =(clock() - lobby[room].timestamp) - lobby[room].clock_b;
+		lobby[room].clock_b += (clock() - lobby[room].timestamp) - lobby[room].clock_a - lobby[room].clock_b;
 	}
 	
     return result;
