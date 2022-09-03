@@ -156,10 +156,15 @@ int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *bu
     // send new message
     result = lobby_redirect_buf(lobby, client, room, buffer);
 	
-	// modify utimer to set other client
-	if (lobby[room].utimer == *lobby[room].pair.cli_a)
+	// modify utimer to set other client and update clock
+	if (lobby[room].utimer == *lobby[room].pair.cli_a) {
+		
 		lobby[room].utimer = *lobby[room].pair.cli_b;
-	else lobby[room].utimer = *lobby[room].pair.cli_a;
+		lobby[room].clock_a = clock();
+	} else {
+		lobby[room].utimer = *lobby[room].pair.cli_a;
+		lobby[room].clock_b = clock();
+	}
 	
     return result;
 }
