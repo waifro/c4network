@@ -3,7 +3,7 @@
 
 #include "client.h"
 
-#define NET_DEFAULT_SERVER "195.58.38.13"
+#define NET_DEFAULT_SERVER "41.216.182.2"
 #define NET_PORT_MAINNET 62443
 #define NET_PORT_TESTNET 61338
 
