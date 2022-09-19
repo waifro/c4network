@@ -67,7 +67,7 @@ int sv_redirect_svcode_POST(int code, net_lobby *lobby, cli_t *client, int room,
     int result = -1;
 
     switch(code) {
-        case SV_LOBBY_POST_START:
+        case SV_LOBBY_POST_INIT:
             result = lobby_random_start(lobby, room, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0");
             break;
 
