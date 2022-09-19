@@ -93,7 +93,7 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen) {
 	}
 	
     char buf[256];
-    sprintf(buf, "%d w %s", SV_LOBBY_POST_START, fen);
+    sprintf(buf, "%d w %s", SV_LOBBY_POST_INIT, fen);
 	
 	for (int n = 0; n < 2; n++) {
 		result = send(foo[n], buf, strlen(buf) + 1, 0);
