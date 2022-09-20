@@ -42,6 +42,7 @@ int lobby_updateroom_reset(net_lobby *lobby, int room);
 /* on success, updates old code by overwriting it | pr: lobby_redirect_buf() */
 int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *buffer);
 int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *buffer);
+int lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room);
 int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room);
 
 /* on success, spams a packet to the pair */

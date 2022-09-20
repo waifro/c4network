@@ -184,7 +184,7 @@ int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *bu
     return result;
 }
 
-lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
+int lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
 	int result = -1;
 	
 	result = lobby_checkroom_cli(lobby, client, room);
