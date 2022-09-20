@@ -49,7 +49,7 @@ int client_accept(int master_socket, struct sockaddr_in *addr) {
 
 int client_disconnect(cli_t *client_list, int index, net_lobby *lobby, struct sockaddr_in *addr, int *connected, int max_clients) {
 	
-	volatile socklen_t addr_size = sizeof(struct sockaddr);
+	socklen_t addr_size = sizeof(struct sockaddr);
 	getpeername(client_list[index], (struct sockaddr*)addr, &addr_size);
 
 	printf("client discnct: %s:%d\t[%d of %d] | ", inet_ntoa(addr->sin_addr), htons(addr->sin_port), (*connected -= 1), max_clients);
