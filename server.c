@@ -208,10 +208,13 @@ int sv_clcode_redirect(int code, net_lobby *lobby, cli_t *client, int room, char
 }
 
 int sv_handlePacket(cli_t *client, char *buffer) {
-
+	
+	if (verify_socket(client) == -1)
+		return -1;
+	
     if (recv(*client, buffer, 255, 0) < 0) {
         memset(buffer, 0x00, 255);
-        return -1;
+        return -2;
     }
 
     int result = 0;
