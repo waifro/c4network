@@ -14,6 +14,17 @@ int retrieve_code(char *mesg) {
     return code;
 }
 
+int verify_socket(cli_t *socket) {
+	
+	if (socket == NULL)
+		return -1;
+		
+	if (*socket == 0)
+		return -2;
+
+	return 1;
+}
+
 int verify_mesg_recv(char *mesg) {
 
     if (strlen(mesg) < 3) return -1;

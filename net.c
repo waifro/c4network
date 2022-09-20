@@ -4,6 +4,7 @@
 
 #include "../pp4m/pp4m_net.h"
 #include "net.h"
+#include "net_utils.h"
 
 int NET_ConnectSocketToServer(cli_t *socket, char *server, int port) {
     int result = -1;
@@ -38,13 +39,15 @@ int NET_CloseSocket(cli_t *socket) {
     return 0;
 }
 
-int NET_SendPacketToServer(cli_t *socket, char *buffer, size_t n_bytes) {
-    int result = -1;
+int NET_SendPacket(cli_t *socket, char *buffer, size_t n_bytes) {
+	int result = -1;
+	
+	if (verify_socket(socket) == 1) {
+		if (buffer != NULL)
+			result = send(*socket, buffer, n_bytes, 0);
+	}
 
-    if (socket != NULL)
-        result = send(*socket, buffer, n_bytes, 0);
-
-    return result;
+	return result;
 }
 
 /*
