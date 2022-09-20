@@ -47,7 +47,7 @@ int client_accept(int master_socket, struct sockaddr_in *addr) {
     return new_client;
 }
 
-int client_disconnect(cli_t *client_list, int index, net_lobby *lobby, sockaddr_in *addr, int *connected, int max_clients) {
+int client_disconnect(cli_t *client_list, int index, net_lobby *lobby, struct sockaddr_in *addr, int *connected, int max_clients) {
 	
 	socklen_t addr_size = sizeof(struct sockaddr);
 	getpeername(client_list[index], (struct sockaddr*)addr, &addr_size);
