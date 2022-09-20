@@ -203,7 +203,7 @@ int lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
     result = lobby_redirect_buf(lobby, client, room, buffer);
 	
 	if (result == -1)
-		printf("lobby_SV_LOBBY_POST_LEAVE [%p:%p] %d\n", lobby[room].pair.cli_a, lobby[room].pair.cli_b, errno);
+		printf("lobby_SV_LOBBY_POST_LEAVE error [%p:%p]\n", lobby[room].pair.cli_a, lobby[room].pair.cli_b);
 	
 	return result;
 }
