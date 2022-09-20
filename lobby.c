@@ -223,12 +223,12 @@ int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room) {
 int lobby_spam_buf(net_lobby *lobby, int room, char *buffer) {
 	int result = -1;
 	
-    result = NET_SendPacket(*lobby[room].pair.cli_a, buffer, strlen(buffer) + 1, 0);
+    result = NET_SendPacket(lobby[room].pair.cli_a, buffer, strlen(buffer) + 1);
 	
 	if (result == -1)
 		perror("lobby_spam_buf 1");
 	
-    result = NET_SendPacket(*lobby[room].pair.cli_b, buffer, strlen(buffer) + 1, 0);
+    result = NET_SendPacket(lobby[room].pair.cli_b, buffer, strlen(buffer) + 1);
 	
 	if (result == -1)
 		perror("lobby_spam_buf 2");
@@ -241,8 +241,8 @@ int lobby_redirect_buf(net_lobby *lobby, cli_t *client, int room, char *buffer) 
 
     result = lobby_checkroom_cli(lobby, client, room);
     if (result == -1) return -2;
-    else if (result == 1) result = NET_SendPacket(*lobby[room].pair.cli_b, buffer, strlen(buffer) + 1, 0);
-    else if (result == 2) result = NET_SendPacket(*lobby[room].pair.cli_a, buffer, strlen(buffer) + 1, 0);
+    else if (result == 1) result = NET_SendPacket(lobby[room].pair.cli_b, buffer, strlen(buffer) + 1);
+    else if (result == 2) result = NET_SendPacket(lobby[room].pair.cli_a, buffer, strlen(buffer) + 1);
 
     return result;
 }
