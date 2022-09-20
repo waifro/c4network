@@ -203,14 +203,15 @@ int cl_redirect_clcode_LOBBY_POST(int code, cli_t *socket, char *buffer, int *po
 
     switch(code) {
     case CL_LOBBY_POST_LEAVE:
+    	result = cl_LOBBY_POST_LEAVE(foo);
         break;
 
     case CL_LOBBY_POST_MOVE:
-        result = cl_POST_LOBBY_MOVE(foo, 255, position_old, position_new, promotn);
+        result = cl_LOBBY_POST_MOVE(foo, 255, position_old, position_new, promotn);
         break;
 
     case CL_LOBBY_POST_MESG:
-        result = cl_POST_LOBBY_MESG(foo, buffer, 255);
+        result = cl_LOBBY_POST_MESG(foo, buffer, 255);
         break;
 
     default:
@@ -227,14 +228,14 @@ int cl_redirect_clcode_LOBBY_POST(int code, cli_t *socket, char *buffer, int *po
 
 
 
-int cl_POST_LOBBY_MESG(char *buffer, char *mesg, int len) {
+int cl_LOBBY_POST_MESG(char *buffer, char *mesg, int len) {
     int result = -1;
     result = snprintf(buffer, len, "%d %s", CL_LOBBY_POST_MESG, mesg);
     if (result > 0) result = 0;
     return result;
 }
 
-int cl_POST_LOBBY_MOVE(char *buffer, int len, int *position_old, int *position_new, int *promotn) {
+int cl_LOBBY_POST_MOVE(char *buffer, int len, int *position_old, int *position_new, int *promotn) {
     int result = -1;
 
     if (buffer != NULL) {
@@ -244,6 +245,22 @@ int cl_POST_LOBBY_MOVE(char *buffer, int len, int *position_old, int *position_n
 
     return result;
 }
+
+int cl_LOBBY_POST_LEAVE(char *buffer) {
+	int result = -1;
+
+	if (buffer != NULL) {
+		result = snprintf(buffer, 255, "%d", CL_LOBBY_POST_LEAVE);
+		if (result > 0) result = 0;
+	}
+	
+	return result;
+}
+
+
+
+
+
 
 int cl_REQ_ASSIGN_LOBBY(char *buffer) {
     int result = -1;

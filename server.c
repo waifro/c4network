@@ -176,7 +176,7 @@ int sv_redirect_clcode_LOBBY_POST(int code, net_lobby *lobby, cli_t *client, int
 
     switch(code) {
         case CL_LOBBY_POST_LEAVE:
-            //result = lobby_assign_cli(client);
+            result = lobby_SV_LOBBY_POST_LEAVE(lobby, client, room);
             break;
 
         case CL_LOBBY_POST_MOVE:

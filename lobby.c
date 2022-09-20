@@ -117,7 +117,9 @@ int lobby_random_start(net_lobby *lobby, int room, char *fen) {
 int lobby_updateroom_cli_left(net_lobby *lobby, cli_t *client) {
     int result = -1;
     int room = -1;
-
+	
+	// we end up here in case the client left forcely the server
+	
     for (room = 0; room < MAX_LOBBY; room++) {
         result = lobby_checkroom_cli(lobby, client, room);
         if (result == -1) continue;
@@ -180,6 +182,27 @@ int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *bu
     result = lobby_redirect_buf(lobby, client, room, buffer);
 
     return result;
+}
+
+lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
+	int result = -1;
+	
+	result = lobby_checkroom_cli(lobby, client, room);
+    if (result != -1) {
+    	
+    	 if (result == 1) lobby[room].pair.cli_a = NULL;
+    	else if (result == 2) lobby[room].pair.cli_b = NULL;
+
+    	lobby[room].status = LB_ERROR;
+    	
+    }
+	
+	// send command code that he left the game
+	char buffer[256];
+	snprintf(buffer, 255, "%d", SV_LOBBY_POST_PARTNER_LEFT);
+    result = lobby_redirect_buf(lobby, client, room, buffer);
+	
+	return result;
 }
 
 int lobby_SV_POST_LOBBY_TIME(net_lobby *lobby, int room) {

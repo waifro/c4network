@@ -58,8 +58,10 @@ int cl_redirect_clcode_POST(int code, char *buffer);
 int cl_redirect_clcode_LOBBY_REQ(int code, char *buffer, int *position_old, int *position_new, int *promotn);
 int cl_redirect_clcode_LOBBY_POST(int code, int *socket, char *buffer, int *position_old, int *position_new, int *promotn);
 
-int cl_POST_LOBBY_MESG(char *buffer, char *mesg, int len);
-int cl_POST_LOBBY_MOVE(char *buffer, int len, int *position_old, int *position_new, int *promotn);
+int cl_LOBBY_POST_MESG(char *buffer, char *mesg, int len);
+int cl_LOBBY_POST_MOVE(char *buffer, int len, int *position_old, int *position_new, int *promotn);
+int cl_LOBBY_POST_LEAVE(char *buffer);
+
 int cl_REQ_ASSIGN_LOBBY(char *buffer);
 
 int cl_svcode_redirect(int code, char *buffer, int *position_old, int *position_new, int *promotn);
