@@ -148,7 +148,7 @@ int lobby_updateroom_reset(net_lobby *lobby, int room) {
 
 int lobby_SV_POST_LOBBY_MOVE(net_lobby *lobby, cli_t *client, int room, char *buffer) {
     int result = -1;
-
+	
     // overwrite old code
     for (int i = 0; i < 3; i++)
         buffer[i] = '0' + pp4m_p_int_index(SV_LOBBY_POST_MOVE, i);
