@@ -39,6 +39,6 @@ void init_client_list(cli_t *client_list, int max);
 void init_lobby_list(net_lobby *lobby_list, int max);
 
 int client_accept(int master_socket, struct sockaddr_in *addr);
-void client_disconnect(cli_t *client);
+int client_disconnect(cli_t *client_list, int index, net_lobby *lobby, struct sockaddr_in *addr, int *connected, int max_clients);
 
 #endif
