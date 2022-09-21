@@ -187,6 +187,14 @@ int lobby_SV_POST_LOBBY_MESG(net_lobby *lobby, cli_t *client, int room, char *bu
 int lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
 	int result = -1;
 	
+	// send command code that he left the game
+	char buffer[256];
+	snprintf(buffer, 255, "%d", SV_LOBBY_POST_PARTNER_LEFT);
+    result = lobby_redirect_buf(lobby, client, room, buffer);
+	
+	if (result == -1)
+		printf("lobby_SV_LOBBY_POST_LEAVE error [%p:%p]\n", lobby[room].pair.cli_a, lobby[room].pair.cli_b);
+	
 	result = lobby_checkroom_cli(lobby, client, room);
     if (result != -1) {
     	
@@ -196,14 +204,6 @@ int lobby_SV_LOBBY_POST_LEAVE(net_lobby *lobby, cli_t *client, int room) {
     	lobby[room].status = LB_ERROR;
     	
     }
-	
-	// send command code that he left the game
-	char buffer[256];
-	snprintf(buffer, 255, "%d", SV_LOBBY_POST_PARTNER_LEFT);
-    result = lobby_redirect_buf(lobby, client, room, buffer);
-	
-	if (result == -1)
-		printf("lobby_SV_LOBBY_POST_LEAVE error [%p:%p]\n", lobby[room].pair.cli_a, lobby[room].pair.cli_b);
 	
 	return result;
 }
