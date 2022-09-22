@@ -39,6 +39,17 @@ int NET_CloseSocket(cli_t *socket) {
     return 0;
 }
 
+int NET_RecvPacket(cli_t *socket, char *buffer, size_t n_bytes) {
+	int result = -1;
+	
+	if (verify_socket(socket) == 1) {
+		if (buffer != NULL)
+			result = recv(*socket, buffer, n_bytes, 0);
+	}
+	
+	return result;
+}
+
 int NET_SendPacket(cli_t *socket, char *buffer, size_t n_bytes) {
 	int result = -1;
 	
