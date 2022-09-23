@@ -32,9 +32,15 @@ typedef struct {
     LOBBY_STATUS status;
 } net_lobby;
 
-int retrieve_code(char *mesg);
+int retrieve_code(char *buffer);
+int verify_code(int code);
+
 int verify_socket(cli_t *socket);
-int verify_mesg_recv(char *mesg);
+
+int verify_mesg(char *buffer);
+int verify_len_mesg(char *buffer);
+int verify_mesg_isdigit(char *buffer);
+
 int generate_val(int max);
 void init_client_list(cli_t *client_list, int max);
 void init_lobby_list(net_lobby *lobby_list, int max);

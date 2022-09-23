@@ -6,12 +6,20 @@
 #include "lobby.h"
 #include "../pp4m/pp4m_net.h"
 
-int retrieve_code(char *mesg) {
+int retrieve_code(char *buffer) {
 
     int code = 0;
-    sscanf(mesg, "%d", &code);
+    sscanf(buffer, "%d %*s", &code);
 
     return code;
+}
+
+int verify_code(int code) {
+	
+	if (code > 100 && code < 400)
+		return 1;
+	
+	return -1;
 }
 
 int verify_socket(cli_t *socket) {
@@ -25,12 +33,39 @@ int verify_socket(cli_t *socket) {
 	return 1;
 }
 
-int verify_mesg_recv(char *mesg) {
+int verify_mesg(char *buffer) {
+	
+	// first, check if is at least long 3 characters and less then 256
+	if (verify_len_mesg(buffer) != 1)
+		return -1;
+	
+	// verify the messages contains at least few digits
+	if (verify_mesg_isdigit(buffer) != 1)
+		return -2;
+	
+	// verify the message is an actual code
+	if (verify_code(retrieve_code(buffer)) != 1)
+		return -3;
+	
+	return 1;
+}
 
-    if (strlen(mesg) < 3) return -1;
-    else if (strlen(mesg) > 255) return -1;
+int verify_len_mesg(char *buffer) {
+	if (buffer == NULL) return -1;
+	
+    if (strlen(buffer) < 3) return -2;
+    else if (strlen(buffer) > 255) return -3;
 
-    return 0;
+    return 1;
+}
+
+int verify_mesg_isdigit(char *buffer) {
+	
+	for(int i = 0; i < 3; i++)
+		if (isdigit(buffer[i]) != 0)
+			return -1;
+	
+	return 1;
 }
 
 int generate_val(int max) {
