@@ -42,6 +42,7 @@ int NET_CloseSocket(cli_t *socket) {
 }
 
 int NET_HandlePacket(cli_t *socket, char *buffer) {
+	int result = 0;
 	
 	if (verify_socket(socket) == -1)
 		return -1;
@@ -51,7 +52,10 @@ int NET_HandlePacket(cli_t *socket, char *buffer) {
         return -2;
     }
 
-    if (verify_mesg(buffer) < 0) return -3;
+    if ((result = verify_mesg(buffer)) < 0) {
+    	printf("result: %d\n", result);
+    	return -3;
+    }
 
     return (retrieve_code(buffer));
 }
