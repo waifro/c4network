@@ -4,6 +4,7 @@
 #include "server.h"
 #include "lobby.h"
 
+#include "net.h"
 #include "net_utils.h"
 #include "../pp4m/pp4m.h"
 #include "../pp4m/pp4m_net.h"
@@ -237,14 +238,9 @@ int sv_handlePacket(cli_t *client, char *buffer) {
         return -2;
     }
 
-    int result = 0;
-    result = verify_mesg_recv(buffer);
-    if (result < 0) return -1;
+    if (verify_mesg(buffer) < 0) return -3;
 
-    result = retrieve_code(buffer);
-    if (result < 0) return -1;
-
-    return result;
+    return (retrieve_code(buffer));
 }
 
 int sv_SV_STATE_IDLE(char *buffer) {
