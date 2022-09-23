@@ -5,6 +5,7 @@
 #include "lobby.h"
 
 #include "net_utils.h"
+#include "../pp4m/pp4m.h"
 #include "../pp4m/pp4m_net.h"
 
 int sv_status_STATE(int code) {
@@ -40,6 +41,10 @@ int sv_redirect_svcode_STATE(int code, net_lobby *lobby, cli_t *client, int room
     int result = -1;
 
     switch(code) {
+		case SV_STATE_CONFIRM:
+			result = sv_SV_STATE_CONFIRM(buffer);
+			break;
+		
         default:
             break;
     }
@@ -225,4 +230,16 @@ int sv_handlePacket(cli_t *client, char *buffer) {
     if (result < 0) return -1;
 
     return result;
+}
+
+int sv_SV_STATE_CONFIRM(char *buffer) {
+	if (buffer == NULL)
+		return -1;
+	
+	for (int i = 0; i < 3; i++)
+		buffer[i] = '0' + pp4m_p_int_index(SV_STATE_CONFIRM, i);
+	
+	buffer[3] = '\0';
+	
+	return 1;
 }
