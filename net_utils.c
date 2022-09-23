@@ -11,7 +11,6 @@ int retrieve_code(char *buffer) {
 
     int code = 0;
     sscanf(buffer, "%d %*s", &code);
-	printf("retrieve_code: %s [%d]\n", buffer, code);
 	
     return code;
 }

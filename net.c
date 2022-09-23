@@ -53,7 +53,7 @@ int NET_HandlePacket(cli_t *socket, char *buffer) {
     }
 
     if ((result = verify_mesg(buffer)) < 0) {
-    	printf("result: %d [%s]\n", result, buffer);
+    	printf("NET_HandlePacket: %d [%s]\n", result, buffer);
     	return -3;
     }
 
