@@ -79,7 +79,7 @@ int lobby_assign_cli(net_lobby *lobby, cli_t *client) {
 		result = sv_redirect_svcode_STATE(SV_STATE_CONFIRM, NULL, client, i, buffer);
 		
 		if (result != 1)
-			printf("lobby_assign_cli: error redirect svcode\n");
+			printf("lobby_assign_cli: error redirect svcode %d\n", result);
 		
         break;
     }

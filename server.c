@@ -38,7 +38,7 @@ int sv_status_LOBBY_POST(int code) {
 
 
 int sv_redirect_svcode_STATE(int code, net_lobby *lobby, cli_t *client, int room, char *buffer) {
-    (void)code; (void)client; (void)room; (void)buffer; (void)lobby;
+    (void)code; (void)client; (void)room; (void)lobby;
     int result = -1;
 	
     switch(code) {
