@@ -68,7 +68,8 @@ int NET_RecvPacket(cli_t *socket, char *buffer, size_t n_bytes) {
 			result = recv(*socket, buffer, n_bytes, 0);
 	}
 	
-	return result;
+	if (result > 0) return 1;
+	else return result;
 }
 
 int NET_SendPacket(cli_t *socket, char *buffer, size_t n_bytes) {
@@ -79,7 +80,8 @@ int NET_SendPacket(cli_t *socket, char *buffer, size_t n_bytes) {
 			result = send(*socket, buffer, n_bytes, 0);
 	}
 
-	return result;
+	if (result > 0) return 1;
+	else return result;
 }
 
 /*
