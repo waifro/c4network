@@ -39,6 +39,21 @@ int NET_CloseSocket(cli_t *socket) {
     return 0;
 }
 
+int NET_HandlePacket(cli_t *socket, char *buffer) {
+	
+	if (verify_socket(socket) == -1)
+		return -1;
+	
+    if (recv(*socket, buffer, 255, 0) < 0) {
+        memset(buffer, 0x00, 255);
+        return -2;
+    }
+
+    if (verify_mesg(buffer) < 0) return -3;
+
+    return (retrieve_code(buffer));
+}
+
 int NET_RecvPacket(cli_t *socket, char *buffer, size_t n_bytes) {
 	int result = -1;
 	

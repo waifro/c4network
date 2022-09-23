@@ -228,21 +228,6 @@ int sv_clcode_redirect(int code, net_lobby *lobby, cli_t *client, int room, char
     return result;
 }
 
-int sv_handlePacket(cli_t *client, char *buffer) {
-	
-	if (verify_socket(client) == -1)
-		return -1;
-	
-    if (recv(*client, buffer, 255, 0) < 0) {
-        memset(buffer, 0x00, 255);
-        return -2;
-    }
-
-    if (verify_mesg(buffer) < 0) return -3;
-
-    return (retrieve_code(buffer));
-}
-
 int sv_SV_STATE_IDLE(char *buffer) {
 	if (buffer == NULL)
 		return -1;

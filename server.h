@@ -55,8 +55,6 @@ int sv_redirect_clcode_LOBBY_POST(int code, net_lobby *lobby, cli_t *client, int
 
 int sv_clcode_redirect(int code, net_lobby *lobby, cli_t *client, int room, char *buffer);
 
-int sv_handlePacket(cli_t *client, char *buffer); // server -> handle client packets
-
 int sv_SV_STATE_IDLE(char *buffer);
 int sv_SV_STATE_CONFIRM(char *buffer);
 int sv_SV_STATE_DENY(char *buffer);

@@ -300,20 +300,3 @@ int cl_clcode_redirect(int code, int *socket, char *buffer, int *position_old, i
 
     return result;
 }
-
-int cl_GrabPacket(cli_t *client, char *buffer) {
-
-    if (recv(*client, buffer, 255, 0) < 0) {
-        memset(buffer, 0x00, 255);
-        return -1;
-    }
-
-    int result = 0;
-    result = verify_mesg_recv(buffer);
-    if (result < 0) return -1;
-
-    result = retrieve_code(buffer);
-    if (result < 0) return -1;
-
-    return result;
-}
