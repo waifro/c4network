@@ -64,7 +64,7 @@ int verify_len_mesg(char *buffer) {
 int verify_mesg_isdigit(char *buffer) {
 	
 	for(int i = 0; i < 3; i++)
-		if (isdigit(buffer[i]) != 0)
+		if (buffer[i] < 48 || buffer[i] > 57)
 			return -1;
 	
 	return 1;
