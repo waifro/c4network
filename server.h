@@ -10,6 +10,7 @@ typedef enum {
         SV_STATE_IDLE,                  // post idle ...................................... || "1xx", code
         SV_STATE_CONFIRM,               // post confirm ................................... || "1xx", code
         SV_STATE_DENY,                  // post deny ...................................... || "1xx", code
+		SV_STATE_ERROR,                  // post error ..................................... || "1xx", code
     SV_STATE_END,                       // STATE END
 
     SV_REQ_START = 200,                 // REQ START
@@ -56,6 +57,9 @@ int sv_clcode_redirect(int code, net_lobby *lobby, cli_t *client, int room, char
 
 int sv_handlePacket(cli_t *client, char *buffer); // server -> handle client packets
 
+int sv_SV_STATE_IDLE(char *buffer);
 int sv_SV_STATE_CONFIRM(char *buffer);
+int sv_SV_STATE_DENY(char *buffer);
+int sv_SV_STATE_ERROR(char *buffer);
 
 #endif

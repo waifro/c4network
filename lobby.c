@@ -74,6 +74,13 @@ int lobby_assign_cli(net_lobby *lobby, cli_t *client) {
 
         // target the lobby
         if (lobby_checkroom_isfull(lobby, i) == 1) lobby[i].status = LB_FULL;
+		
+		char buffer[256];
+		result = sv_redirect_svcode_STATE(SV_STATE_CONFIRM, NULL, client, i, buffer);
+		
+		if (result != 1)
+			printf("lobby_assign_cli: error redirect svcode\n");
+		
         break;
     }
 

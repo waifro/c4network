@@ -39,16 +39,31 @@ int sv_status_LOBBY_POST(int code) {
 int sv_redirect_svcode_STATE(int code, net_lobby *lobby, cli_t *client, int room, char *buffer) {
     (void)code; (void)client; (void)room; (void)buffer; (void)lobby;
     int result = -1;
-
+	
     switch(code) {
+		case SV_STATE_IDLE:
+			result = sv_SV_STATE_IDLE(buffer);
+			break;
+			
 		case SV_STATE_CONFIRM:
 			result = sv_SV_STATE_CONFIRM(buffer);
 			break;
-		
+			
+		case SV_STATE_DENY:
+			result = sv_SV_STATE_DENY(buffer);
+			break;
+			
+		case SV_STATE_ERROR:
+			result = sv_SV_STATE_ERROR(buffer);
+			break;
+			
         default:
             break;
     }
-
+	
+	// should we need to send a SV_STATE_ERROR if an error occurred?
+	result = NET_SendPacket(client, buffer, strlen(buffer)+1);
+	
     return result;
 }
 
@@ -232,12 +247,48 @@ int sv_handlePacket(cli_t *client, char *buffer) {
     return result;
 }
 
+int sv_SV_STATE_IDLE(char *buffer) {
+	if (buffer == NULL)
+		return -1;
+	
+	for (int i = 0; i < 3; i++)
+		buffer[i] = '0' + pp4m_p_int_index(SV_STATE_IDLE, i);
+	
+	buffer[3] = '\0';
+	
+	return 1;
+}
+
 int sv_SV_STATE_CONFIRM(char *buffer) {
 	if (buffer == NULL)
 		return -1;
 	
 	for (int i = 0; i < 3; i++)
 		buffer[i] = '0' + pp4m_p_int_index(SV_STATE_CONFIRM, i);
+	
+	buffer[3] = '\0';
+	
+	return 1;
+}
+
+int sv_SV_STATE_DENY(char *buffer) {
+	if (buffer == NULL)
+		return -1;
+	
+	for (int i = 0; i < 3; i++)
+		buffer[i] = '0' + pp4m_p_int_index(SV_STATE_DENY, i);
+	
+	buffer[3] = '\0';
+	
+	return 1;
+}
+
+int sv_SV_STATE_ERROR(char *buffer) {
+	if (buffer == NULL)
+		return -1;
+	
+	for (int i = 0; i < 3; i++)
+		buffer[i] = '0' + pp4m_p_int_index(SV_STATE_ERROR, i);
 	
 	buffer[3] = '\0';
 	
