@@ -27,6 +27,9 @@ int lobby_checkroom_endcycle(net_lobby *lobby, int room);
 /* on success, returns 1 or 2 if either cli_a or cli_b matches the client, otherwise returns -1 */
 int lobby_checkroom_cli(net_lobby *lobby, cli_t *client, int room);
 
+/* on success, returns 1 if the client is already assigned a room, otherwise returns -1 */
+int lobby_checkroom_cli_assigned(net_lobby *lobby, cli_t *client);
+
 /* on success, assignes client into a lobby signed LB_AVAIL and updates the room if full */
 int lobby_assign_cli(net_lobby *lobby, cli_t *client);
 

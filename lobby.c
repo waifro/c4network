@@ -61,13 +61,22 @@ int lobby_checkroom_cli(net_lobby *lobby, cli_t *client, int room) {
     else return -1;
 }
 
-int lobby_assign_cli(net_lobby *lobby, cli_t *client) {
-    int result = -1;
+int lobby_checkroom_cli_assigned(net_lobby *lobby, cli_t *client) {
 	
 	// check if client is already signed inside a room
 	for (int i = 0; i < MAX_LOBBY; i++)
     	if (lobby_checkroom_cli(lobby, client, i) > 0)
-    		return -1;
+    		return 1;
+
+	return -1;
+}
+
+int lobby_assign_cli(net_lobby *lobby, cli_t *client) {
+    int result = -1;	
+	
+	// checks if client is already assigned
+	if (lobby_checkroom_cli_assigned(lobby, client) == 1)
+		return -1;
 	
     for (int i = 0; i < MAX_LOBBY; i++) {
         result = lobby_checkroom_avail(lobby, i);
