@@ -10,9 +10,15 @@
 int NET_ConnectSocketToServer(cli_t *socket, char *server, int port);
 
 int NET_CloseSocket(cli_t *socket);
+
+// detects if socket is recieving data
 int NET_DetectSignal(cli_t *restrict socket);
 int NET_HandlePacket(cli_t *socket, char *buffer);
+
+// if socket is okay, recieve it of maximum n_bytes
 int NET_RecvPacket(cli_t *socket, char *buffer, size_t n_bytes);
+
+// if socket is okay, sends it of maximum n_bytes
 int NET_SendPacket(cli_t *socket, char *buffer, size_t n_bytes);
 
 /*
